@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$RONTARDIO Degen Meter - How Delusional Are You?</title>
+    
+    <!-- External Scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js"></script>
+    
+    <!-- SEO and Social Media Meta Tags -->
+    <meta name="description" content="Measure your crypto degeneracy and overnight moon delusions! Are you peak $RONTARDIO? Find out now! 🚀🤡">
+    <meta name="keywords" content="crypto, degen, meme, $RONTARDIO, bitcoin, ethereum, moon, lambo, ape">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How $RONTARDIO Are You? 🤡 Crypto Degen Meter">
+    <meta name="twitter:description" content="Measure your crypto degeneracy and overnight moon delusions! Are you peak $RONTARDIO? 🚀🤡">
+    <meta name="twitter:image" content="https://via.placeholder.com/1200x630/1a1a2e/ffffff?text=💰%20$RONTARDIO%20METER%20🤡">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="$RONTARDIO Degen Meter - How Delusional Are You?">
+    <meta property="og:description" content="Find out how delusional you are about getting rich overnight with crypto! 🚀">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/1a1a2e/ffffff?text=💰%20$RONTARDIO%20METER%20🤡">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤡</text></svg>">
+    
+    <style>
+        /* Custom CSS for better performance */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 5px currentColor; }
+            50% { text-shadow: 0 0 20px currentColor; }
+        }
+        
+        .animate-glow {
+            animation: glow 2s infinite;
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #fb923c;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+        const { TrendingUp, Zap } = lucideReact;
+
+        const RontardioMeter = () => {
+            const [degenMove, setDegenMove] = useState('');
+            const [loading, setLoading] = useState(false);
+            const [result, setResult] = useState(null);
+            const [error, setError] = useState('');
+            const [displayScore, setDisplayScore] = useState(0);
+
+            const exampleMoves = [
+                { 
+                    label: "100x leverage YOLO", 
+                    text: "I just put my life savings on 100x leverage because a TikTok told me Bitcoin is going to $500k this week"
+                },
+                { 
+                    label: "Mortgage for meme coin", 
+                    text: "I took out a second mortgage to buy DogeElonMars because Elon tweeted a dog emoji"
+                },
+                { 
+                    label: "TA crystal ball reading", 
+                    text: "The charts clearly show we're forming a triple inverted cup and handle, so I'm going all in"
+                },
+                { 
+                    label: "Obvious rug pull buy", 
+                    text: "This new coin has anonymous devs and no utility, but it's only $0.0001 so it HAS to moon"
+                }
+            ];
+
+            // Simple rule-based scoring system (no API required)
+            const analyzeDegenMove = async () => {
+                if (!degenMove.trim()) {
+                    setError('Please enter your degen move to analyze your $RONTARDIO level!');
+                    return;
+                }
+
+                setLoading(true);
+                setError('');
+
+                // Simulate API delay for authenticity
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                try {
+                    const text = degenMove.toLowerCase();
+                    let score = 10; // Base score
+                    
+                    // High risk keywords
+                    const highRiskWords = {
+                        'leverage': 25, '100x': 30, 'yolo': 20, 'mortgage': 35, 'life savings': 30,
+                        'lambo': 15, 'moon': 15, 'rocket': 10, 'diamond hands': 5, 'hodl': 5,
+                        'ape': 20, 'fomo': 15, 'safemoon': 25, 'dogecoin': 10, 'shitcoin': 20,
+                        'rugpull': 25, 'scam': 20, 'ponzi': 25, 'tiktok': 20, 'youtube': 15,
+                        'crystal ball': 20, 'technical analysis': 15, 'cup and handle': 20,
+                        'anonymous': 25, 'no utility': 30, 'memecoin': 15, 'elon': 10
+                    };
+                    
+                    // Calculate score based on keywords
+                    Object.entries(highRiskWords).forEach(([word, points]) => {
+                        if (text.includes(word)) {
+                            score += points;
+                        }
+                    });
+                    
+                    // Add randomness for variety
+                    score += Math.floor(Math.random() * 20) - 10;
+                    
+                    // Ensure score is within bounds
+                    score = Math.max(0, Math.min(100, score));
+                    
+                    // Generate category and responses
+                    let category, judgment, advice;
+                    
+                    if (score <= 20) {
+                        category = "Normie Investor";
+                        judgment = "Boring but actually smart. You might not lose your house, how disappointing! 🧠";
+                        advice = "Keep being responsible, I guess. Your future self will thank you (but it's not very exciting). 💤";
+                    } else if (score <= 40) {
+                        category = "Baby Degen";
+                        judgment = "Getting spicy but still have some brain cells left. There's hope for you yet! 🤔";
+                        advice = "You're walking the line between smart and stupid. Don't cross over to the dark side! ⚖️";
+                    } else if (score <= 60) {
+                        category = "Full Degen";
+                        judgment = "Logic has officially left the building! Welcome to the casino, sir/madam! 🚀";
+                        advice = "Your risk tolerance is higher than a stoner on Mount Everest. Maybe pump the brakes a bit? 🛑";
+                    } else if (score <= 80) {
+                        category = "Certified Ape";
+                        judgment = "You've gone full ape mode! Reason is dead and buried. RIP to your portfolio! 🦍";
+                        advice = "At this point you're basically gambling with extra steps. Consider therapy... or maybe just more hopium! 💊";
+                    } else {
+                        category = "Peak $RONTARDIO";
+                        judgment = "Congratulations, you've reached peak clown status! 🤡 Your delusion levels are off the charts!";
+                        advice = "There's no saving you now. You belong in a museum as an example of maximum financial stupidity! 🎪";
+                    }
+                    
+                    const analysisResult = {
+                        score: score,
+                        category: category,
+                        judgment: judgment,
+                        advice: advice
+                    };
+                    
+                    setResult(analysisResult);
+                    animateScore(score);
+                    
+                } catch (err) {
+                    setError('Failed to analyze your degeneracy. Even our AI can\'t handle this level of $RONTARDIO!');
+                    console.error('Error:', err);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            const animateScore = (targetScore) => {
+                const duration = 2000;
+                const startTime = Date.now();
+                const startScore = 0;
+
+                const updateScore = () => {
+                    const now = Date.now();
+                    const progress = Math.min((now - startTime) / duration, 1);
+                    
+                    const easeOut = 1 - Math.pow(1 - progress, 2);
+                    const currentScore = Math.round(startScore + (targetScore - startScore) * easeOut);
+                    
+                    setDisplayScore(currentScore);
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(updateScore);
+                    }
+                };
+                
+                requestAnimationFrame(updateScore);
+            };
+
+            const getGaugeColor = (score) => {
+                if (score <= 20) return '#10B981';
+                if (score <= 40) return '#F59E0B';
+                if (score <= 60) return '#F97316';
+                if (score <= 80) return '#DC2626';
+                return '#7C2D12';
+            };
+            
+            const getGaugeFillDasharray = (score) => {
+                const arcLength = 220;
+                const fillLength = (score / 100) * arcLength;
+                return `${fillLength} ${arcLength}`;
+            };
+
+            const getScoreEmoji = (score) => {
+                if (score <= 20) return '🧠';
+                if (score <= 40) return '🤔';
+                if (score <= 60) return '🚀';
+                if (score <= 80) return '🦍';
+                return '🤡';
+            };
+
+            const shareOnTwitter = () => {
+                const text = `I just scored ${displayScore}% on the $RONTARDIO Degen Meter! 🤡\n\nCategory: ${result.category} ${getScoreEmoji(displayScore)}\n\nHow delusional are you about crypto gains? Find out: `;
+                const url = window.location.href;
+                const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+                window.open(twitterUrl, '_blank');
+            };
+
+            return React.createElement('div', {
+                className: "min-h-screen p-8",
+                style: { 
+                    background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
+                }
+            }, 
+                React.createElement('div', { className: "max-w-2xl mx-auto" },
+                    // Title Section
+                    React.createElement('div', { className: "text-center mb-8" },
+                        React.createElement('h1', {
+                            className: "text-5xl font-black mb-2 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent animate-pulse"
+                        }, "How $RONTARDIO are you?"),
+                        React.createElement('p', {
+                            className: "text-cyan-300 text-lg font-semibold"
+                        }, "Measure your degen level and overnight moon delusions 🚀"),
+                        React.createElement('div', { className: "flex justify-center space-x-2 mt-4" },
+                            React.createElement(TrendingUp, { className: "text-green-400 animate-bounce", size: 24 }),
+                            React.createElement(Zap, { className: "text-yellow-400 animate-pulse", size: 24 }),
+                            React.createElement(TrendingUp, { 
+                                className: "text-red-400 animate-bounce", 
+                                size: 24, 
+                                style: { animationDelay: '0.5s' } 
+                            })
+                        )
+                    ),
+
+                    // Main Container
+                    React.createElement('div', { 
+                        className: "bg-gray-900 bg-opacity-90 rounded-2xl shadow-2xl p-8 border border-gray-700" 
+                    },
+                        // Gauge Section
+                        React.createElement('div', { className: "flex flex-col items-center mb-8" },
+                            React.createElement('div', { className: "relative w-80 h-48 mb-4" },
+                                React.createElement('svg', { viewBox: "0 0 200 130", className: "w-full h-full" },
+                                    // Background arc
+                                    React.createElement('path', {
+                                        d: "M 30 100 A 70 70 0 0 1 170 100",
+                                        fill: "none",
+                                        stroke: "#374151",
+                                        strokeWidth: "20",
+                                        strokeLinecap: "round"
+                                    }),
+                                    // Fill arc
+                                    React.createElement('path', {
+                                        d: "M 30 100 A 70 70 0 0 1 170 100",
+                                        fill: "none",
+                                        stroke: getGaugeColor(displayScore),
+                                        strokeWidth: "20",
+                                        strokeLinecap: "round",
+                                        strokeDasharray: getGaugeFillDasharray(displayScore),
+                                        className: "transition-all duration-2000 ease-out drop-shadow-lg",
+                                        style: {
+                                            filter: `drop-shadow(0 0 10px ${getGaugeColor(displayScore)}40)`
+                                        }
+                                    }),
+                                    // Labels
+                                    React.createElement('text', {
+                                        x: "28", y: "125", textAnchor: "middle", 
+                                        className: "text-xs font-bold fill-gray-400"
+                                    }, "🧠"),
+                                    React.createElement('text', {
+                                        x: "100", y: "15", textAnchor: "middle", 
+                                        className: "text-xs font-bold fill-gray-400"
+                                    }, "🚀"),
+                                    React.createElement('text', {
+                                        x: "172", y: "125", textAnchor: "middle", 
+                                        className: "text-xs font-bold fill-gray-400"
+                                    }, "🤡")
+                                ),
+                                
+                                // Score Display
+                                React.createElement('div', { 
+                                    className: "absolute inset-0 flex items-center justify-center" 
+                                },
+                                    React.createElement('div', { className: "text-center mt-16" },
+                                        React.createElement('div', { 
+                                            className: "flex items-center justify-center space-x-2 mb-2" 
+                                        },
+                                            React.createElement('span', { className: "text-4xl" }, getScoreEmoji(displayScore)),
+                                            React.createElement('span', { 
+                                                className: "text-5xl font-black text-white animate-pulse" 
+                                            }, `${result ? displayScore : 0}%`)
+                                        ),
+                                        result && React.createElement('div', { className: "space-y-1" },
+                                            React.createElement('span', { 
+                                                className: "text-sm font-bold block text-cyan-300" 
+                                            }, result.category)
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+
+                        // Input Section
+                        React.createElement('div', { className: "mb-6" },
+                            React.createElement('label', { 
+                                className: "block text-lg font-bold mb-3 text-white" 
+                            }, "What's your latest crypto move?"),
+                            
+                            !result ? [
+                                React.createElement('textarea', {
+                                    key: "textarea",
+                                    value: degenMove,
+                                    onChange: (e) => setDegenMove(e.target.value),
+                                    placeholder: "I just aped my entire paycheck into SafeElonDogeCoin because it's going to 1000x...",
+                                    className: "w-full p-4 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:border-orange-500 focus:outline-none resize-none placeholder-gray-400",
+                                    rows: 4
+                                }),
+                                
+                                React.createElement('div', { key: "examples", className: "mt-3" },
+                                    React.createElement('div', { className: "flex flex-wrap gap-2" },
+                                        exampleMoves.map((example, index) =>
+                                            React.createElement('button', {
+                                                key: index,
+                                                onClick: () => setDegenMove(example.text),
+                                                className: "px-3 py-2 text-sm border border-orange-500 text-orange-400 rounded-full transition-all hover:bg-orange-500 hover:text-white transform hover:scale-105"
+                                            }, example.label)
+                                        )
+                                    )
+                                ),
+                                
+                                error && React.createElement('div', {
+                                    key: "error",
+                                    className: "mt-3 flex items-center text-red-400 bg-red-900 bg-opacity-30 p-3 rounded-lg"
+                                },
+                                    React.createElement(Zap, { className: "w-5 h-5 mr-2" }),
+                                    React.createElement('span', {}, error)
+                                ),
+
+                                React.createElement('button', {
+                                    key: "button",
+                                    onClick: analyzeDegenMove,
+                                    disabled: loading,
+                                    className: `mt-4 w-full py-4 rounded-lg font-black text-white transition-all transform hover:scale-105 ${
+                                        loading 
+                                            ? 'bg-gradient-to-r from-gray-600 to-gray-700' 
+                                            : 'bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700'
+                                    }`,
+                                    style: {
+                                        boxShadow: loading ? 'none' : '0 0 20px rgba(251, 146, 60, 0.5)'
+                                    }
+                                }, loading ? 
+                                    React.createElement('div', { className: "flex items-center justify-center" },
+                                        React.createElement('div', { className: "spinner mr-2" }),
+                                        "Calculating moon delusion..."
+                                    ) : "Measure my degeneracy! 🔥"
+                                )
+                            ] : React.createElement('div', { 
+                                className: "bg-gray-800 rounded-lg p-4 border border-gray-600" 
+                            },
+                                React.createElement('p', { className: "italic text-gray-300" }, `"${degenMove}"`)
+                            )
+                        ),
+
+                        // Results Section
+                        result && React.createElement('div', { className: "animate-fadeIn" },
+                            React.createElement('div', { className: "border-t border-gray-700 pt-6" },
+                                React.createElement('div', { className: "space-y-6" },
+                                    React.createElement('div', {},
+                                        React.createElement('p', { 
+                                            className: "text-lg font-bold mb-3 text-white flex items-center" 
+                                        },
+                                            React.createElement(TrendingUp, { 
+                                                className: "mr-2 text-orange-500", size: 20 
+                                            }),
+                                            "Degeneracy Analysis"
+                                        ),
+                                        React.createElement('div', { 
+                                            className: "bg-gradient-to-r from-orange-900 to-red-900 bg-opacity-30 rounded-lg p-4 border border-orange-500 border-opacity-30" 
+                                        },
+                                            React.createElement('p', { className: "text-orange-100 font-medium" }, result.judgment)
+                                        )
+                                    ),
+                                    
+                                    React.createElement('div', {},
+                                        React.createElement('p', { 
+                                            className: "text-lg font-bold mb-3 text-white flex items-center" 
+                                        },
+                                            React.createElement(Zap, { className: "mr-2 text-cyan-400", size: 20 }),
+                                            "Reality Check"
+                                        ),
+                                        React.createElement('div', { 
+                                            className: "bg-gradient-to-r from-cyan-900 to-blue-900 bg-opacity-30 rounded-lg p-4 border border-cyan-500 border-opacity-30" 
+                                        },
+                                            React.createElement('p', { className: "text-cyan-100 font-medium" }, result.advice)
+                                        )
+                                    )
+                                ),
+
+                                React.createElement('div', { className: "flex space-x-4 mt-6" },
+                                    React.createElement('button', {
+                                        onClick: shareOnTwitter,
+                                        className: "flex-1 py-3 bg-blue-500 text-white rounded-lg font-bold transition-all hover:bg-blue-600 transform hover:scale-105 flex items-center justify-center"
+                                    }, "🐦 Share on X"),
+                                    
+                                    React.createElement('button', {
+                                        onClick: () => {
+                                            setDegenMove('');
+                                            setResult(null);
+                                            setDisplayScore(0);
+                                        },
+                                        className: "flex-1 py-3 border-2 border-cyan-500 text-cyan-400 rounded-lg font-bold transition-all hover:bg-cyan-500 hover:text-white transform hover:scale-105"
+                                    }, "Rate another degen move")
+                                )
+                            )
+                        )
+                    ),
+
+                    // Crypto ticker
+                    React.createElement('div', { className: "mt-8 text-center" },
+                        React.createElement('div', { className: "text-green-400 font-mono text-sm animate-pulse" },
+                            "BTC: $42,069 📈 | ETH: $2,420 🚀 | DOGE: $0.069 🌙"
+                        )
+                    )
+                )
+            );
+        };
+
+        ReactDOM.render(React.createElement(RontardioMeter), document.getElementById('root'));
+    </script>
+</body>
+</html>
